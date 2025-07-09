@@ -57,7 +57,17 @@ The Fake News Detection project is designed to identify and classify news articl
 | Serialization        | Joblib                                    |
 | UI Styling           | HTML, CSS                                 |
 
+
 ---
+
+## 📂 Dataset Download
+
+The dataset files `fake.csv` and `real.csv` are included in the following ZIP archive:
+
+🔗 TRUE - [Download dataset.zip](dataset.zip)
+🔗 FALSE - [Download dataset.zip](dataset.zip)
+
+ --
 
 ## Group Members
 
