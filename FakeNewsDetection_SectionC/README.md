@@ -99,7 +99,7 @@ The dataset files `fake.csv` and `real.csv` are included in the following ZIP ar
 
 You can read the full project report here:  
 [📘 View Project_Report.pdf](AIProjectreport.pdf)
-
+If you can’t access this, please download it first, then you’ll be able to view it.
 
 ## 🚀 Getting Started
 
