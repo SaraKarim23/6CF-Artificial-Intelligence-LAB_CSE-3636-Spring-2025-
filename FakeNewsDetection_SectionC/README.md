@@ -70,9 +70,13 @@ The Fake News Detection project is designed to identify and classify news articl
   <img src="outputfake.jpg"" width="45%" alt="Web Interface 2"/>
 </div>
 
-### 🔹 Prediction Output Example
+### 🔹 Prediction Output 
 
-![Prediction Output](prediction.jpg")
+<div align="center">
+  <img src="prediction.jpg"" width="45%" alt="Web Interface 1"/>
+  &nbsp;&nbsp;
+</div>
+
 
 ---
 
