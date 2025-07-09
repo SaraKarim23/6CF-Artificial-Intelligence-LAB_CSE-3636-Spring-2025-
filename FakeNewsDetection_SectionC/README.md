@@ -64,8 +64,8 @@ The Fake News Detection project is designed to identify and classify news articl
 
 The dataset files `fake.csv` and `real.csv` are included in the following ZIP archive:
 
-🔗 TRUE - [Download dataset.zip](dataset.zip)
-🔗 FALSE - [Download dataset.zip](dataset.zip)
+🔗 TRUE - [Download dataset.zip](truezip.zip)
+🔗 FALSE - [Download dataset.zip](Fake.zip)
 
  --
 
