@@ -30,6 +30,11 @@ The Fake News Detection project is designed to identify and classify news articl
 3. 🤖 ML model predicts whether the news is **Fake** or **Real**  
 4. 🎯 Result is displayed in a stylish result box (🟥 Fake, 🟩 Real)
 
+<div align="center">
+  <img src="workflow.jpg"" width="45%" alt="Web Interface 1"/>
+  &nbsp;&nbsp;
+</div>
+
 ---
 
 ## ✨ Features
