@@ -62,20 +62,17 @@ The Fake News Detection project is designed to identify and classify news articl
 | Sohain Tabassum Biva | C223280    |
 
 ## 📊 Screenshots
-
-> ⚠️ Upload your screenshots to a folder like `images/` and use the names below or change them in the code.
-
-### 🔹 Web App Interface
+## 📊 Screenshots Web App Interface
 
 <div align="center">
-  <img src="images/"C:\Users\User\Downloads\outputreal.jpg"" width="45%" alt="Web Interface 1"/>
+  <img src="outputreal.jpg"" width="45%" alt="Web Interface 1"/>
   &nbsp;&nbsp;
-  <img src="images/"C:\Users\User\Downloads\outputfake.jpg"" width="45%" alt="Web Interface 2"/>
+  <img src="outputfake.jpg"" width="45%" alt="Web Interface 2"/>
 </div>
 
 ### 🔹 Prediction Output Example
 
-![Prediction Output](images/"C:\Users\User\Downloads\prediction.jpg")
+![Prediction Output](prediction.jpg")
 
 ---
 
