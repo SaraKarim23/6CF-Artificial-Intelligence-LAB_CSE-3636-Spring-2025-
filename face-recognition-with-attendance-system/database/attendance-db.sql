@@ -72,11 +72,6 @@ CREATE TABLE `tblcourse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblcourse`
---
-
-INSERT INTO `tblcourse` (`Id`, `name`, `facultyID`, `dateCreated`, `courseCode`) VALUES
-(10, 'Computer Technology', 8, '2024-04-07', 'BCT');
 
 -- --------------------------------------------------------
 
@@ -92,13 +87,7 @@ CREATE TABLE `tblfaculty` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `tblfaculty`
---
-
-INSERT INTO `tblfaculty` (`Id`, `facultyName`, `facultyCode`, `dateRegistered`) VALUES
-(8, 'Computing and Information Technology', 'CIT', '2024-04-07');
-
--- --------------------------------------------------------
+-----------------------------
 
 --
 -- Table structure for table `tbllecture`
@@ -116,11 +105,6 @@ CREATE TABLE `tbllecture` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `tbllecture`
---
-
-INSERT INTO `tbllecture` (`Id`, `firstName`, `lastName`, `emailAddress`, `password`, `phoneNo`, `facultyCode`, `dateCreated`) VALUES
-(15, 'mark', 'lila', 'mark@gmail.com', '$2y$10$/st06w2mh/4adxGE9yCxROHkqHp6SzRARGhfCIg95zC3cxqbmkpaW', '07123456789', 'CIT', '2024-04-07');
 
 -- --------------------------------------------------------
 
@@ -155,11 +139,7 @@ CREATE TABLE `tblunit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblunit`
---
-
-INSERT INTO `tblunit` (`Id`, `name`, `unitCode`, `courseID`, `dateCreated`) VALUES
-(3, 'Project Implementation', 'BCT 2411', '8', '2024-04-07');
+', '8', '2024-04-07');
 
 -- --------------------------------------------------------
 
@@ -178,11 +158,6 @@ CREATE TABLE `tblvenue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tblvenue`
---
-
-INSERT INTO `tblvenue` (`Id`, `className`, `facultyCode`, `currentStatus`, `capacity`, `classification`, `dateCreated`) VALUES
-(15, 'b34', 'CIT', 'availlable', 45, 'laboratory', '2024-11-26');
 
 --
 -- Indexes for dumped tables
