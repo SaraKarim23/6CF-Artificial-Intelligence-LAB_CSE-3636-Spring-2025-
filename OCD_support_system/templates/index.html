@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCD Support Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-darker: #0a0a0a;
+            --bg-sidebar: #1e1e1e;
+            --primary: #56b391;
+            --primary-dark: #034228;
+            --text-primary: #e1e1e1;
+            --text-secondary: #a0a0a0;
+            --bg-message-user: #2a2a2a;
+            --bg-message-bot: #333333;
+            --yes-btn: #4caf50;
+            --no-btn: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid #333;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+        
+        .sidebar-header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-header h2 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .conversation-list {
+            list-style: none;
+        }
+        
+        .conversation-item {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-left: 3px solid transparent;
+        }
+        
+        .conversation-item:hover {
+            background-color: #2a2a2a;
+        }
+        
+        .conversation-item.active {
+            border-left: 3px solid var(--primary);
+            background-color: #2a2a2a;
+        }
+        
+        .conversation-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .conversation-preview {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #333;
+            background-color: var(--bg-darker);
+        }
+        
+        .chat-header h2 {
+            color: var(--primary);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--bg-dark);
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+            position: relative;
+        }
+        
+        .user-message {
+            background-color: var(--bg-message-user);
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .bot-message {
+            background-color: var(--bg-message-bot);
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .task-card {
+            background-color: var(--bg-sidebar);
+            border-left: 3px solid var(--primary);
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        
+        .task-title {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .yes-btn {
+            background-color: var(--yes-btn);
+            color: white;
+        }
+        
+        .no-btn {
+            background-color: var(--no-btn);
+            color: white;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            background-color: var(--bg-darker);
+            border-top: 1px solid #333;
+        }
+        
+        .chat-input-form {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: none;
+            background-color: #2a2a2a;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .send-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+        
+        .send-button:hover {
+            background-color: #46bb8e;;
+        }
+        
+        .send-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-sidebar);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        
+        .new-conversation-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>OCD Support</h2>
+            <p>Conversation History</p>
+            <button class="new-conversation-btn" id="newConversationBtn">
+                <span>+</span> New Chat
+            </button>
+        </div>
+        <ul class="conversation-list" id="conversationList">
+            <!-- Conversation history will be added here dynamically -->
+        </ul>
+    </div>
+    
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Chat with OCD Support</h2>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        
+        <div class="chat-input-container">
+            <form class="chat-input-form" id="chatForm">
+                <input type="text" class="chat-input" id="userInput" placeholder="Type your message here..." autocomplete="off">
+                <button type="submit" class="send-button">
+                    <span class="send-icon">➤</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatForm = document.getElementById('chatForm');
+            const userInput = document.getElementById('userInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const conversationList = document.getElementById('conversationList');
+            const newConversationBtn = document.getElementById('newConversationBtn');
+            
+            // Current conversation state
+            let currentConversation = {
+                id: null,
+                state: 0, // GREETING state
+                messages: []
+            };
+            
+            // Load conversation history
+            loadConversationHistory();
+            
+            // Start new conversation
+            newConversationBtn.addEventListener('click', startNewConversation);
+            
+            // Handle form submission
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const message = userInput.value.trim();
+                
+                if (message) {
+                    // Add user message to chat
+                    addMessageToChat('user', message);
+                    
+                    // Add to current conversation
+                    currentConversation.messages.push({
+                        sender: 'user',
+                        text: message,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    // Clear input
+                    userInput.value = '';
+                    
+                    // Prepare request data
+                    const requestData = {
+                        message: message,
+                        conversation_id: currentConversation.id,
+                        state: currentConversation.state,
+                        full_conversation: currentConversation.messages
+                    };
+                    
+                    // Send to server
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update conversation state
+                        currentConversation.state = data.state;
+                        if (data.conversation_id && !currentConversation.id) {
+                            currentConversation.id = data.conversation_id;
+                        }
+                        
+                        // Add bot response to chat
+                        addMessageToChat('bot', data.reply);
+                        
+                        // Add to current conversation
+                        currentConversation.messages.push({
+                            sender: 'bot',
+                            text: data.reply,
+                            timestamp: new Date().toISOString()
+                        });
+                        
+                        // Add task if available
+                        if (data.tasks && data.tasks.length > 0) {
+                            const task = data.tasks[0];
+                            addTaskCard(task.title, task.description);
+                            
+                            currentConversation.messages.push({
+                                sender: 'system',
+                                text: `Suggested task: ${task.title} - ${task.description}`,
+                                timestamp: new Date().toISOString()
+                            });
+                        }
+                        
+                        // Show action buttons if offering help
+                        if (data.offer_help) {
+                            addActionButtons();
+                        }
+                        
+                        // Update conversation history if conversation ended
+                        if (data.state === 0) { // GREETING state means conversation ended
+                            loadConversationHistory();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        addMessageToChat('bot', "Sorry, I'm having trouble responding. Please try again later.");
+                    });
+                }
+            });
+            
+            function startNewConversation() {
+                currentConversation = {
+                    id: null,
+                    state: 0,
+                    messages: []
+                };
+                chatMessages.innerHTML = '';
+                userInput.focus();
+            }
+            
+            function loadConversationHistory() {
+                fetch('/history')
+                    .then(response => response.json())
+                    .then(conversations => {
+                        conversationList.innerHTML = '';
+                        
+                        conversations.forEach(conv => {
+                            const conversationItem = document.createElement('li');
+                            conversationItem.className = 'conversation-item';
+                            if (currentConversation.id === conv.id) {
+                                conversationItem.classList.add('active');
+                            }
+                            
+                            // Find the first user message for preview
+                            const userMessage = conv.messages.find(m => m.sender === 'user');
+                            const botMessage = conv.messages.find(m => m.sender === 'bot');
+                            
+                            conversationItem.innerHTML = `
+                                <div class="conversation-date">${new Date(conv.id).toLocaleString()}</div>
+                                <div class="conversation-preview"><strong>You:</strong> ${userMessage?.text || ''}</div>
+                                <div class="conversation-preview"><strong>Bot:</strong> ${botMessage?.text || ''}</div>
+                            `;
+                            
+                            conversationItem.addEventListener('click', function() {
+                                loadConversation(conv);
+                            });
+                            
+                            conversationList.appendChild(conversationItem);
+                        });
+                    });
+            }
+            
+            function loadConversation(conversation) {
+                currentConversation = {
+                    id: conversation.id,
+                    state: 0, // Reset to greeting state
+                    messages: conversation.messages
+                };
+                
+                chatMessages.innerHTML = '';
+                
+                conversation.messages.forEach(msg => {
+                    if (msg.sender === 'system') return;
+                    addMessageToChat(msg.sender, msg.text, new Date(msg.timestamp));
+                });
+            }
+            
+            function addMessageToChat(sender, message, timestamp = new Date()) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                messageDiv.innerHTML = `
+                    <div>${message}</div>
+                    <div class="message-time">${timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                scrollToBottom();
+            }
+            
+            function addTaskCard(title, description) {
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'task-card';
+                taskDiv.innerHTML = `
+                    <div class="task-title">${title}</div>
+                    <div>${description}</div>
+                `;
+                chatMessages.appendChild(taskDiv);
+                scrollToBottom();
+            }
+            
+            function addActionButtons() {
+                const buttonsDiv = document.createElement('div');
+                buttonsDiv.className = 'action-buttons';
+                buttonsDiv.innerHTML = `
+                    <button class="action-btn yes-btn" id="yesBtn">Yes, please</button>
+                    <button class="action-btn no-btn" id="noBtn">No, thanks</button>
+                `;
+                chatMessages.appendChild(buttonsDiv);
+                scrollToBottom();
+                
+                document.getElementById('yesBtn').addEventListener('click', function() {
+                    const message = "yes";
+                    addMessageToChat('user', message);
+                    currentConversation.messages.push({
+                        sender: 'user',
+                        text: message,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    buttonsDiv.remove();
+                    
+                    // Simulate sending this to server
+                    const requestData = {
+                        message: message,
+                        conversation_id: currentConversation.id,
+                        state: currentConversation.state,
+                        full_conversation: currentConversation.messages
+                    };
+                    
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        currentConversation.state = data.state;
+                        addMessageToChat('bot', data.reply);
+                        
+                        if (data.tasks && data.tasks.length > 0) {
+                            const task = data.tasks[0];
+                            addTaskCard(task.title, task.description);
+                        }
+                    });
+                });
+                
+                document.getElementById('noBtn').addEventListener('click', function() {
+                    const message = "no";
+                    addMessageToChat('user', message);
+                    currentConversation.messages.push({
+                        sender: 'user',
+                        text: message,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    buttonsDiv.remove();
+                    
+                    // Simulate sending this to server
+                    const requestData = {
+                        message: message,
+                        conversation_id: currentConversation.id,
+                        state: currentConversation.state,
+                        full_conversation: currentConversation.messages
+                    };
+                    
+                    fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        currentConversation.state = data.state;
+                        addMessageToChat('bot', data.reply);
+                    });
+                });
+            }
+            
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Start with greeting message
+            addMessageToChat('bot', "Hello! I'm here to help with OCD-related concerns. How are you feeling today?");
+        });
+    </script>
+</body>
+</html>
