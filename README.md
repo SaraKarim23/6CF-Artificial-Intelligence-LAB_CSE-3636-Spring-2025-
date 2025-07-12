@@ -1,52 +1,52 @@
-# 6CF-Artificial-Intelligence-LAB_CSE-3636-Spring-2025-
-📍 Project Origin:  This project is developed as part of the 'Artificial Intelligence Lab' course, which is a part of the semester course final work, under the Department of Computer Science and Engineering, International Islamic University Chittagong, Bangladesh.
+# Chatbot Deployment with Flask and JavaScript
 
-Welcome to the AI Lab for Section 6CF! This repository is where you and your teammates will submit assignments, projects, and AI experiments.  
+In this tutorial we deploy the chatbot I created in [this](https://github.com/python-engineer/pytorch-chatbot) tutorial with Flask and JavaScript.
 
-## Remember: *Teamwork + AI = Innovation!* 
+This gives 2 deployment options:
+- Deploy within Flask app with jinja2 template
+- Serve only the Flask prediction API. The used html and javascript files can be included in any Frontend application (with only a slight modification) and can run completely separate from the Flask App then.
 
----
+## Initial Setup:
+This repo currently contains the starter files.
 
-## 📌 How to Use This Repository  
+Clone repo and create a virtual environment
+```
+$ git clone https://github.com/python-engineer/chatbot-deployment.git
+$ cd chatbot-deployment
+$ python3 -m venv venv
+$ . venv/bin/activate
+```
+Install dependencies
+```
+$ (venv) pip install Flask torch torchvision nltk
+```
+Install nltk package
+```
+$ (venv) python
+>>> import nltk
+>>> nltk.download('punkt')
+```
+Modify `intents.json` with different intents and responses for your Chatbot
 
-### 🏆 Step 1: Accept the GitHub Invitation  
-- Check your email for an invite to this repository.  
-- Click *"Accept"*, and you're officially part of the squad! 🎉  
+Run
+```
+$ (venv) python train.py
+```
+This will dump data.pth file. And then run
+the following command to test it in the console.
+```
+$ (venv) python chat.py
+```
 
-### 📂 Step 2: Create Your Team's Folder  
-- *One member from each team* must create a folder for their group.  
-- Name it in the following format:  
-  bash
-  TeamName_SectionX
+Now for deployment follow my tutorial to implement `app.py` and `app.js`.
 
-### 🤝 Step 3: Ensure Everyone Contributes
-- Every team member must commit their work themselves.
-- Use meaningful commit messages so we know who did what.
-Example
-  bash
-  git commit -m "Added Lab 1 solution - Sara_C20...."
+## Watch the Tutorial
+[![Alt text](https://img.youtube.com/vi/a37BL0stIuM/hqdefault.jpg)](https://youtu.be/a37BL0stIuM)  
+[https://youtu.be/a37BL0stIuM](https://youtu.be/a37BL0stIuM)
 
-### 🚀 Step 4: Upload Your Work (Like a Pro)
-- After completing your work:
-  ```bash
-  git add .
-  git commit -m "Added Lab 1 - Sara_C20...."
-  git push origin main
+## Note
+In the video we implement the first approach using jinja2 templates within our Flask app. Only slight modifications are needed to run the frontend separately. I put the final frontend code for a standalone frontend application in the [standalone-frontend](/standalone-frontend) folder.
 
-### ⚠️ Repository Rules (a.k.a. The AI Commandments)
-- ✅ One folder per team – No extra folders, no chaos! 🚀
-- ✅ Everyone must contribute – GitHub tracks everything. No free rides! 👀
-- ✅ Follow best practices – Clean, structured code = Happy AI.
-- ✅ No sabotage – Don't mess with other teams’ files. 🚫
-- ✅ If you mess up, fix it!
-
-🚀 Pro Tips for AI Success
-- Commit often – Backup your work before disaster strikes.
-- Use GitHub issues & pull requests to discuss changes with your team.
-- If something breaks, don’t panic – Google, Stack Overflow, and I are here to help.
-
-📢 Questions? Errors? Existential AI dilemmas?
-- Ask in class, message your team, or reach out to me.
-
-### Instructor: Sara Karim
-- 💡 "Code together, learn together, and let’s build something amazing!"
+## Credits:
+This repo was used for the frontend code:
+https://github.com/hitchcliff/front-end-chatjs
